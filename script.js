@@ -7,6 +7,40 @@ function showPage() {
   document.body.classList.remove('js-loading');
 }
 
+let img  = document.querySelectorAll(".img-cont");
+
+//animation javascript
+const appearOptions = {
+  threshold: 0.1,
+  rootMargin: "0px 0px -250px 0px"
+};
+
+const visible = document.querySelectorAll(".is-visible");
+
+const appearOnScroll = new IntersectionObserver(function(
+  entries,
+  appearOnScroll
+) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) {
+      return;
+    } else {
+      entry.target.classList.add("appear");
+      appearOnScroll.unobserve(entry.target);
+    }
+  });
+},
+appearOptions);
+
+  visible.forEach(visibles => {
+      appearOnScroll.observe(visibles);
+  });
+
+  img.forEach(image => {
+      appearOnScroll.observe(image);
+  });
+
+
 //code to fetch from api 
 let heading = document.querySelectorAll(".heading");
 
@@ -16,7 +50,7 @@ let summary = document.querySelectorAll(".summary");
 
 let section = document.querySelectorAll(".section");
 
-let img  = document.querySelectorAll(".img-cont");
+
 
 
 let sport = fetch("https://newscatcher.p.rapidapi.com/v1/latest_headlines?topic=sport&lang=en&media=True", headers);
@@ -56,33 +90,3 @@ let process = (res) => {
 	});
 };
 
-//animation javascript
-const appearOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -250px 0px"
-};
-
-const visible = document.querySelectorAll(".is-visible");
-
-const appearOnScroll = new IntersectionObserver(function(
-    entries,
-    appearOnScroll
-  ) {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) {
-        return;
-      } else {
-        entry.target.classList.add("appear");
-        appearOnScroll.unobserve(entry.target);
-      }
-    });
-  },
-  appearOptions);
-
-    visible.forEach(visibles => {
-        appearOnScroll.observe(visibles);
-    });
-  
-    img.forEach(image => {
-        appearOnScroll.observe(image);
-    });
